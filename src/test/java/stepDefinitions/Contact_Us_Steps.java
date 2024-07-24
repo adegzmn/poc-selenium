@@ -5,68 +5,64 @@ import io.cucumber.java.Before;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.PageLoadStrategy;
+import net.bytebuddy.utility.RandomString;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.Assert;
 
 public class Contact_Us_Steps {
-//    private WebDriver driver;
+    private WebDriver driver;
 
-//    @Before
-//    public void setup() {
-//        System.setProperty("webdriver.chrome.driver",  System.getProperty("user.dir" + "/src/main/java/drivers/chromedriver"));
-//        ChromeOptions chromeOptions = new ChromeOptions();
-//        chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
-//        driver = new ChromeDriver(chromeOptions);
-//        driver.manage().window().maximize();
-//    }
-//
-//    @After
-//    public void tearDown(){
-//        driver.quit();
-//    }
+    @Before
+    public void setup() {
+        driver = new ChromeDriver();
+        driver.manage().window().maximize();
+    }
+
+    @After
+    public void tearDown(){
+        driver.quit();
+    }
+
+    public String generateRandomString(int length){
+       return RandomString.make(length);
+    }
 
     @Given("I access the WebDriver University - Contact Us Page")
     public void i_access_the_web_driver_university_contact_us_page() {
-//        driver.get("http://webdriveruniversity.com/Contact-Us/contactus.html");
-        // Write code here that turns the phrase above into concrete actions
-        System.out.println("Test 1");
+        driver.get("http://webdriveruniversity.com/Contact-Us/contactus.html");
     }
 
     @When("I enter a unique first name")
     public void i_enter_a_unique_first_name() {
-        // Write code here that turns the phrase above into concrete actions
-        System.out.println("Test 2");
+        driver.findElement(By.cssSelector("input[placeholder='First Name']")).sendKeys("Auto FN"+generateRandomString(3));
     }
 
     @When("I enter a unique last name")
     public void i_enter_a_unique_last_name() {
-        // Write code here that turns the phrase above into concrete actions
-        System.out.println("Test 3");
+        driver.findElement(By.cssSelector("input[placeholder='Last Name']")).sendKeys("Auto LN"+generateRandomString(3));
     }
 
     @When("I enter a unique email address")
     public void i_enter_a_unique_email_address() {
-        // Write code here that turns the phrase above into concrete actions
-        System.out.println("Test 4");
+        driver.findElement(By.cssSelector("input[placeholder='Email Address']")).sendKeys("AutoMail"+generateRandomString(10)+"@mail.com");
     }
 
     @When("I enter a unique comment")
     public void i_enter_a_unique_comment() {
-        // Write code here that turns the phrase above into concrete actions
-        System.out.println("Test 5");
+        driver.findElement(By.cssSelector("textarea[placeholder='Comments']")).sendKeys("Auto Comment"+generateRandomString(3));
     }
 
     @When("I click on the submit button")
     public void i_click_on_the_submit_button() {
-        // Write code here that turns the phrase above into concrete actions
-        System.out.println("Test 6");
+        driver.findElement(By.cssSelector("input[value='SUBMIT']")).click();
     }
 
     @Then("I should be presented with a successful contact us submission message")
     public void i_should_be_presented_with_a_successful_contact_us_submission_message() {
-        // Write code here that turns the phrase above into concrete actions
-        System.out.println("Test 7");
+        WebElement message = driver.findElement(By.cssSelector("#contact_reply h1"));
+        Assert.assertEquals(message.getText(), "Thank You for your Message!");
     }
 }
