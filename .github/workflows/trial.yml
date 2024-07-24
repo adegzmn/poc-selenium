@@ -17,8 +17,10 @@ jobs:
       uses: actions/setup-java@v4
 
       with:
-
-        java-version: 22
+        
+        java-version: '22'
+        distribution: 'temurin'
+        cache: maven
 
     - name: Build with Maven
 
@@ -38,7 +40,9 @@ jobs:
 
       with:
 
-        java-version: 22
+        java-version: '22'
+        distribution: 'temurin'
+        cache: maven
 
     - name: Test with Maven
 
@@ -58,8 +62,10 @@ jobs:
 
       with:
 
-        java-version: 22
-
+        java-version: '22'
+        distribution: 'temurin'
+        cache: maven
+        
     - name: Test with Maven
 
       run: mvn -B package --file pom.xml test
