@@ -25,47 +25,9 @@ jobs:
     - name: Build with Maven
 
       run: mvn -B package --file pom.xml
-      
-  test_1:
 
-    runs-on: ubuntu-latest
+    - name: Run tests with Maven
 
-    steps:
+      working-directory: adgzmn-selenium
 
-    - uses: actions/checkout@v4
-
-    - name: Set up JDK 22
-
-      uses: actions/setup-java@v4
-
-      with:
-
-        java-version: '22'
-        distribution: 'temurin'
-        cache: maven
-
-    - name: Test with Maven
-
-      run: mvn clean test
-
-  test_2:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-    - uses: actions/checkout@v4
-
-    - name: Set up JDK 22
-
-      uses: actions/setup-java@v4
-
-      with:
-
-        java-version: '22'
-        distribution: 'temurin'
-        cache: maven
-        
-    - name: Test with Maven
-
-      run: mvn -B package --file pom.xml test
+      run: mvn test
