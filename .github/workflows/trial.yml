@@ -25,4 +25,4 @@ jobs:
                           ./scripts/InstallChrome.sh 
 
     - name: Run tests with Maven
-      run: mvn clean verify -Dtestng.dtd.http=true
+      run: mvn clean verify -DsuiteXmlFile=testng.xml
