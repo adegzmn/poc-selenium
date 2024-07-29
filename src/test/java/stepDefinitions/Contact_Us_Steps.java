@@ -19,7 +19,7 @@ public class Contact_Us_Steps {
 
     @Before
     public void setup() {
-        WebDriverManager.chromedriver().setup();
+//        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--no-sandbox");
         options.addArguments("--disable-dev-shm-usage");

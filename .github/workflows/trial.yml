@@ -19,10 +19,10 @@ jobs:
         distribution: 'temurin'
         cache: maven
     
-    - name: Install Google Chrome 
-      run: |
-              chmod +x ./scripts/InstallChrome.sh
-                          ./scripts/InstallChrome.sh 
+#    - name: Install Google Chrome
+#      run: |
+#              chmod +x ./scripts/InstallChrome.sh
+#                          ./scripts/InstallChrome.sh
 
     - name: Run tests with Maven
       run: mvn clean test -DsuiteXmlFile=src/test/java/testng.xml
