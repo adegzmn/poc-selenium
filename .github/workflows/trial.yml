@@ -1,6 +1,10 @@
 name: Build and Test
 
-on: [push]
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 
 jobs:
 
@@ -18,11 +22,6 @@ jobs:
         java-version: '22'
         distribution: 'temurin'
         cache: maven
-    
-#    - name: Install Google Chrome
-#      run: |
-#              chmod +x ./scripts/InstallChrome.sh
-#                          ./scripts/InstallChrome.sh
 
     - name: Run tests with Maven
       run: mvn clean test -DsuiteXmlFile=src/test/java/testng.xml
