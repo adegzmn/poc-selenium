@@ -69,5 +69,6 @@ public class Contact_Us_Steps {
     public void i_should_be_presented_with_a_successful_contact_us_submission_message() {
         WebElement message = driver.findElement(By.cssSelector("#contact_reply h1"));
         Assert.assertEquals(message.getText(), "Thank You for your Message!");
+        System.out.println("SUCCESS");
     }
 }
