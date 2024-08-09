@@ -44,7 +44,7 @@ jobs:
         # 
         # deploy_key: # optional
         # # 
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        # github_token: ${{ secrets.GITHUB_TOKEN }}
         # # 
         personal_token: ${{ secrets.ACCESS_TOKEN }}
         # # 
