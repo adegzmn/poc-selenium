@@ -39,5 +39,5 @@ jobs:
     - name: Deploy Pages
       uses: JamesIves/github-pages-deploy-action@v4.5.0
       with:
-        branch: gh-pages
+        branch: main
         folder: ./reports/SparkReport
