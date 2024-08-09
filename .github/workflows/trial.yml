@@ -35,3 +35,9 @@ jobs:
         retention-days: 2
         compression-level: 6
         overwrite: true
+
+    - name: Deploy Pages
+      uses: Adegzmn/github-pages-deploy-action@v4.5.0
+      with:
+        branch: gh-pages
+        folder: ./reports/SparkReport
