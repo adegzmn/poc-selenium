@@ -30,7 +30,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Spark.html
-        path: ./reports/SparkReport/Spark.html
+        path: ./reports/SparkReport/index.html
         if-no-files-found: ignore
         retention-days: 2
         compression-level: 6
