@@ -36,7 +36,7 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: Spark.html
-        path: ./reports/SparkReport/index.html
+        path: ./reports/SparkReport
         if-no-files-found: ignore
         retention-days: 2
         compression-level: 6
@@ -60,7 +60,7 @@ jobs:
         # Artifact name
         name: github-pages
         # Path of the directory containing the static assets.
-        path: ./reports/SparkReport/index.html
+        path: ./reports/SparkReport
         # Duration after which artifact will expire in days.
         retention-days: 7
     - name: Deploy GitHub Pages site
