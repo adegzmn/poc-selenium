@@ -35,7 +35,7 @@ jobs:
     - name: Upload Reports
       uses: actions/upload-artifact@v4
       with:
-        name: Spark.html
+        name: ${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}.html
         path: ./reports/SparkReport
         if-no-files-found: ignore
         retention-days: 2
@@ -87,7 +87,7 @@ jobs:
     continue-on-error: true
     env:
       # Unique URL path for each workflow run attempt
-      HTML_REPORT_URL_PATH: reports/${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}
+      HTML_REPORT_URL_PATH: ${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}
     steps:
       - name: Checkout GitHub Pages Branch
         uses: actions/checkout@v2
