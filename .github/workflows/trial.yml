@@ -102,7 +102,7 @@ jobs:
         uses: actions/download-artifact@v2
         with:
           name: selenium-report
-          path: ${{ env.HTML_REPORT_URL_PATH }}
+          path: ./reports/SparkReport
       - name: Push HTML Report
         timeout-minutes: 3
         # commit report, then try push-rebase-loop until it's able to merge the HTML report to the gh-pages branch
