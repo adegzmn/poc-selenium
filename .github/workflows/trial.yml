@@ -60,7 +60,7 @@ jobs:
         # Artifact name
         name: github-pages
         # Path of the directory containing the static assets.
-        path: ./reports/SparkReport
+        path: ./reports/SparkReport/index.html
         # Duration after which artifact will expire in days.
         retention-days: 7
     - name: Deploy GitHub Pages site
@@ -80,36 +80,36 @@ jobs:
         # preview: # optional, default is false
 
 
-    - name: GitHub Pages v3
-      # You may pin to the exact commit or the version.
-      # uses: peaceiris/actions-github-pages@b80a30e9bf3c1ec596532c3813f0aff094f555e2
-      uses: peaceiris/actions-github-pages@v3.1.12
-      with:
-        # 
-        # deploy_key: # optional
-        # # 
-        token: ${{ github.token }}
-        # # 
-        # personal_token: ${{ secrets.ACCESS_TOKEN }}
-        # # 
-        # publish_branch: # optional, default is gh-pages
-        # # 
-        publish_dir: ./reports
-        # # 
-        # external_repository: # optional
-        # # If empty commits should be made to the publication branch
-        # allow_empty_commit: # optional, default is false
-        # # If existing files in the publish branch should be not removed before deploying
-        # keep_files: # optional, default is false
-        # # Keep only the latest commit on a GitHub Pages branch
-        # force_orphan: # optional, default is false
-        # # Set Git user.name
-        # user_name: # optional
-        # # Set Git user.email
-        # user_email: # optional
-        # # Set custom commit message
-        # commit_message: # optional
-        # # Set tag name
-    #     # tag_name: # optional
-    #     # # Set tag message
-    #     # tag_message: # optional
+    # - name: GitHub Pages v3
+    #   # You may pin to the exact commit or the version.
+    #   # uses: peaceiris/actions-github-pages@b80a30e9bf3c1ec596532c3813f0aff094f555e2
+    #   uses: peaceiris/actions-github-pages@v3.1.12
+    #   with:
+    #     # 
+    #     # deploy_key: # optional
+    #     # # 
+    #     token: ${{ github.token }}
+    #     # # 
+    #     # personal_token: ${{ secrets.ACCESS_TOKEN }}
+    #     # # 
+    #     # publish_branch: # optional, default is gh-pages
+    #     # # 
+    #     publish_dir: ./reports
+    #     # # 
+    #     # external_repository: # optional
+    #     # # If empty commits should be made to the publication branch
+    #     # allow_empty_commit: # optional, default is false
+    #     # # If existing files in the publish branch should be not removed before deploying
+    #     # keep_files: # optional, default is false
+    #     # # Keep only the latest commit on a GitHub Pages branch
+    #     # force_orphan: # optional, default is false
+    #     # # Set Git user.name
+    #     # user_name: # optional
+    #     # # Set Git user.email
+    #     # user_email: # optional
+    #     # # Set custom commit message
+    #     # commit_message: # optional
+    #     # # Set tag name
+    # #     # tag_name: # optional
+    # #     # # Set tag message
+    # #     # tag_message: # optional
