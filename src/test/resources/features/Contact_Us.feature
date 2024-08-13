@@ -8,3 +8,7 @@ Feature: WebDriver University - Contact Us Page
     And I enter a unique comment
     And I click on the submit button
     Then I should be presented with a successful contact us submission message
+
+  Scenario: Enter First Name
+    Given I access the WebDriver University - Contact Us Page
+    When I enter a unique first name
