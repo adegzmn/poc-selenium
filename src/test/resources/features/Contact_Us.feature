@@ -16,3 +16,7 @@ Feature: WebDriver University - Contact Us Page
   Scenario: Enter Last Name
     Given I access the WebDriver University - Contact Us Page
     When I enter a unique last name
+
+  Scenario: Enter Email Address
+    Given I access the WebDriver University - Contact Us Page
+    When I enter a unique email address
