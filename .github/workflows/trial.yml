@@ -35,7 +35,7 @@ jobs:
     - name: Upload Reports
       uses: actions/upload-artifact@v4
       with:
-        name: index.html
+        name: index-${{ github.run_id }}.html
         path: ./reports/SparkReport
         if-no-files-found: ignore
         retention-days: 2
