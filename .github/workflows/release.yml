@@ -59,7 +59,6 @@ jobs:
         token: ${{ github.token }}
 
     - name: Main Branch Checkout
-      uses: oleksiyrudenko/gha-git-credentials@v2-latest
       with:
         token: '${{ secrets.GITHUB_TOKEN }}'
       run: |
