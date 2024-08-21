@@ -1,4 +1,4 @@
-name: Release Workflow
+name: Release to Main Workflow
 
 on:
   pull_request:
@@ -58,10 +58,18 @@ jobs:
       with:
         token: ${{ github.token }}
 
-    - name: Merge Release to Master
-      uses: mtanzi/action-automerge@v1
-      id: merge
+    - name: Main Branch Checkout
+      uses: oleksiyrudenko/gha-git-credentials@v2-latest
       with:
-        github_token: ${{ github.token }}
-        source: 'release'
-        target: 'main'
+        token: '${{ secrets.GITHUB_TOKEN }}'
+      run: |
+        git fetch
+        git checkout main
+
+    - name: Merge Release to Main
+      uses: devvspaces/merge-branches@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        from_branch: release
+        to_branch: main
+          
