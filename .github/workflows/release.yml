@@ -58,17 +58,15 @@ jobs:
       with:
         token: ${{ github.token }}
 
-    - name: Main Branch Checkout
+    - name: Merge branch
+      # You may pin to the exact commit or the version.
+      # uses: devmasx/merge-branch@854d3ac71ed1e9deb668e0074781b81fdd6e771f
+      uses: devmasx/merge-branch@1.4.0
       with:
-        token: '${{ secrets.GITHUB_TOKEN }}'
-      run: |
-        git fetch
-        git checkout main
-
-    - name: Merge Release to Main
-      uses: devvspaces/merge-branches@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        label_name: Merging
+        target_branch: main
         from_branch: release
-        to_branch: main
+        head_to_merge: GITHUB_SHA
+        github_token: ${{ github.token }}
+              
           
