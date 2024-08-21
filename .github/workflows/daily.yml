@@ -1,4 +1,4 @@
-name: Daily Smoke Test Runs
+name: Daily Smoke Test
 
 on:
   schedule:
