@@ -1,167 +1,167 @@
-name: Build and Test
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-
-  build:
-
-    runs-on: ubuntu-latest
-
-    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-
-    steps:
-
-    - uses: actions/checkout@v4
-
-    - name: Set up JDK 22
-      uses: actions/setup-java@v4
-      with:
-        java-version: '22'
-        distribution: 'temurin'
-        cache: maven
-
-    - name: Run tests with Maven
-      run: mvn clean test -DsuiteXmlFile=src/test/java/testng.xml
-
-    - name: Upload Reports
-      uses: actions/upload-artifact@v4
-      with:
-        name: index-${{ github.run_number }}.html
-        path: ./reports/SparkReport
-        if-no-files-found: ignore
-        retention-days: 2
-        compression-level: 6
-        overwrite: true
-
-
-    - name: Configure GitHub Pages
-      uses: actions/configure-pages@v5.0.0
-      with:
-        # # Optional static site generator to attempt to configure: "nuxt", "next", "gatsby", or "sveltekit"
-        # static_site_generator: # optional
-        # # Optional file path to static site generator configuration file
-        # generator_config_file: # optional
-        # GitHub token
-        token: ${{ github.token }}
-        # # Try to enable Pages for the repository if it is not already enabled. This option requires a token other than `GITHUB_TOKEN` to be provided. In the context of a Personal Access Token, the `repo` scope or Pages write permission is required. In the context of a GitHub App, the `administration:write` and `pages:write` permissions are required.
-        # enablement: # optional, default is false
-    - name: Upload GitHub Pages artifact
-      uses: actions/upload-pages-artifact@v3.0.1
-      with:
-        # Artifact name
-        name: github-pages
-        # Path of the directory containing the static assets.
-        path: ./reports/SparkReport
-        # Duration after which artifact will expire in days.
-        retention-days: 7
-    - name: Deploy GitHub Pages site
-      uses: actions/deploy-pages@v4.0.5
-      with:
-        # GitHub token
-        token: ${{ github.token }}
-        # # Time in milliseconds after which to timeout and cancel the deployment (default: 10 minutes)
-        # timeout: # optional, default is 600000
-        # # Maximum number of status report errors before cancelling a deployment (default: 10)
-        # error_count: # optional, default is 10
-        # # Time in milliseconds between two deployment status report (default: 5 seconds)
-        # reporting_interval: # optional, default is 5000
-        # # Name of the artifact to deploy
-        # artifact_name: # optional, default is github-pages
-        # # Is this attempting to deploy a pull request as a GitHub Pages preview site? (NOTE: This feature is only in alpha currently and is not available to the public!)
-        # preview: # optional, default is false
-
-        
-
-    # - name: GitHub Pages v3
-    #   # You may pin to the exact commit or the version.
-    #   # uses: peaceiris/actions-github-pages@b80a30e9bf3c1ec596532c3813f0aff094f555e2
-    #   uses: peaceiris/actions-github-pages@v3.1.12
-    #   with:
-    #     # 
-    #     # deploy_key: # optional
-    #     # # 
-    #     token: ${{ github.token }}
-    #     # # 
-    #     # personal_token: ${{ secrets.ACCESS_TOKEN }}
-    #     # # 
-    #     # publish_branch: # optional, default is gh-pages
-    #     # # 
-    #     publish_dir: ./reports
-    #     # # 
-    #     # external_repository: # optional
-    #     # # If empty commits should be made to the publication branch
-    #     # allow_empty_commit: # optional, default is false
-    #     # # If existing files in the publish branch should be not removed before deploying
-    #     # keep_files: # optional, default is false
-    #     # # Keep only the latest commit on a GitHub Pages branch
-    #     # force_orphan: # optional, default is false
-    #     # # Set Git user.name
-    #     # user_name: # optional
-    #     # # Set Git user.email
-    #     # user_email: # optional
-    #     # # Set custom commit message
-    #     # commit_message: # optional
-    #     # # Set tag name
-    # #     # tag_name: # optional
-    # #     # # Set tag message
-    # #     # tag_message: # optional
-
-    # publish_report:
-    # name: Publish HTML Report
-    # # using always() is not ideal here, because it would also run if the workflow was cancelled
-    # if: "success() || needs.test.result == 'failure'"
-    # runs-on: ubuntu-latest
-    # continue-on-error: true
-    # env:
-    #   # Unique URL path for each workflow run attempt
-    #   HTML_REPORT_URL_PATH: ${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}
-    # steps:
-    #   - name: Checkout GitHub Pages Branch
-    #     uses: actions/checkout@v2
-    #     with:
-    #       ref: gh-pages
-    #   - name: Set Git User
-    #     # see: https://github.com/actions/checkout/issues/13#issuecomment-724415212
-    #     run: |
-    #       git config --global user.name "github-actions[bot]"
-    #       git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-    #   - name: Download zipped HTML report
-    #     uses: actions/download-artifact@v2
-    #     with:
-    #       name: selenium-report
-    #       path: ./reports/SparkReport
-    #   - name: Push HTML Report
-    #     timeout-minutes: 3
-    #     # commit report, then try push-rebase-loop until it's able to merge the HTML report to the gh-pages branch
-    #     # this is necessary when this job is running at least twice at the same time (e.g. through two pushes at the same time)
-    #     run: |
-    #       git add .
-    #       git commit -m "workflow: add HTML report for run-id ${{ github.run_id }} (attempt:  ${{ github.run_attempt }})"
-  
-    #       while true; do
-    #         git pull --rebase
-    #         if [ $? -ne 0 ]; then
-    #           echo "Failed to rebase. Please review manually."
-    #           exit 1
-    #         fi
-  
-    #         git push
-    #         if [ $? -eq 0 ]; then
-    #           echo "Successfully pushed HTML report to repo."
-    #           exit 0
-    #         fi
-    #       done
-    #   - name: Output Report URL as Worfklow Annotation
-    #     run: |
-    #       FULL_HTML_REPORT_URL=https://adegzmn.github.io/adgzmn-selenium/reports/$HTML_REPORT_URL_PATH
-  
-    #       echo "::notice title=📋 Published Selenium Test Report::$FULL_HTML_REPORT_URL"
+#name: Build and Test
+#
+#on:
+##  push:
+##    branches: [ "main" ]
+##  pull_request:
+##    branches: [ "main" ]
+#
+#jobs:
+#
+#  build:
+#
+#    runs-on: ubuntu-latest
+#
+#    # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+#    permissions:
+#      contents: read
+#      pages: write
+#      id-token: write
+#
+#    steps:
+#
+#    - uses: actions/checkout@v4
+#
+#    - name: Set up JDK 22
+#      uses: actions/setup-java@v4
+#      with:
+#        java-version: '22'
+#        distribution: 'temurin'
+#        cache: maven
+#
+#    - name: Run tests with Maven
+#      run: mvn clean test -DsuiteXmlFile=src/test/java/testng.xml
+#
+#    - name: Upload Reports
+#      uses: actions/upload-artifact@v4
+#      with:
+#        name: index-${{ github.run_number }}.html
+#        path: ./reports/SparkReport
+#        if-no-files-found: ignore
+#        retention-days: 2
+#        compression-level: 6
+#        overwrite: true
+#
+#
+#    - name: Configure GitHub Pages
+#      uses: actions/configure-pages@v5.0.0
+#      with:
+#        # # Optional static site generator to attempt to configure: "nuxt", "next", "gatsby", or "sveltekit"
+#        # static_site_generator: # optional
+#        # # Optional file path to static site generator configuration file
+#        # generator_config_file: # optional
+#        # GitHub token
+#        token: ${{ github.token }}
+#        # # Try to enable Pages for the repository if it is not already enabled. This option requires a token other than `GITHUB_TOKEN` to be provided. In the context of a Personal Access Token, the `repo` scope or Pages write permission is required. In the context of a GitHub App, the `administration:write` and `pages:write` permissions are required.
+#        # enablement: # optional, default is false
+#    - name: Upload GitHub Pages artifact
+#      uses: actions/upload-pages-artifact@v3.0.1
+#      with:
+#        # Artifact name
+#        name: github-pages
+#        # Path of the directory containing the static assets.
+#        path: ./reports/SparkReport
+#        # Duration after which artifact will expire in days.
+#        retention-days: 7
+#    - name: Deploy GitHub Pages site
+#      uses: actions/deploy-pages@v4.0.5
+#      with:
+#        # GitHub token
+#        token: ${{ github.token }}
+#        # # Time in milliseconds after which to timeout and cancel the deployment (default: 10 minutes)
+#        # timeout: # optional, default is 600000
+#        # # Maximum number of status report errors before cancelling a deployment (default: 10)
+#        # error_count: # optional, default is 10
+#        # # Time in milliseconds between two deployment status report (default: 5 seconds)
+#        # reporting_interval: # optional, default is 5000
+#        # # Name of the artifact to deploy
+#        # artifact_name: # optional, default is github-pages
+#        # # Is this attempting to deploy a pull request as a GitHub Pages preview site? (NOTE: This feature is only in alpha currently and is not available to the public!)
+#        # preview: # optional, default is false
+#
+#
+#
+#    # - name: GitHub Pages v3
+#    #   # You may pin to the exact commit or the version.
+#    #   # uses: peaceiris/actions-github-pages@b80a30e9bf3c1ec596532c3813f0aff094f555e2
+#    #   uses: peaceiris/actions-github-pages@v3.1.12
+#    #   with:
+#    #     #
+#    #     # deploy_key: # optional
+#    #     # #
+#    #     token: ${{ github.token }}
+#    #     # #
+#    #     # personal_token: ${{ secrets.ACCESS_TOKEN }}
+#    #     # #
+#    #     # publish_branch: # optional, default is gh-pages
+#    #     # #
+#    #     publish_dir: ./reports
+#    #     # #
+#    #     # external_repository: # optional
+#    #     # # If empty commits should be made to the publication branch
+#    #     # allow_empty_commit: # optional, default is false
+#    #     # # If existing files in the publish branch should be not removed before deploying
+#    #     # keep_files: # optional, default is false
+#    #     # # Keep only the latest commit on a GitHub Pages branch
+#    #     # force_orphan: # optional, default is false
+#    #     # # Set Git user.name
+#    #     # user_name: # optional
+#    #     # # Set Git user.email
+#    #     # user_email: # optional
+#    #     # # Set custom commit message
+#    #     # commit_message: # optional
+#    #     # # Set tag name
+#    # #     # tag_name: # optional
+#    # #     # # Set tag message
+#    # #     # tag_message: # optional
+#
+#    # publish_report:
+#    # name: Publish HTML Report
+#    # # using always() is not ideal here, because it would also run if the workflow was cancelled
+#    # if: "success() || needs.test.result == 'failure'"
+#    # runs-on: ubuntu-latest
+#    # continue-on-error: true
+#    # env:
+#    #   # Unique URL path for each workflow run attempt
+#    #   HTML_REPORT_URL_PATH: ${{ github.ref_name }}/${{ github.run_id }}/${{ github.run_attempt }}
+#    # steps:
+#    #   - name: Checkout GitHub Pages Branch
+#    #     uses: actions/checkout@v2
+#    #     with:
+#    #       ref: gh-pages
+#    #   - name: Set Git User
+#    #     # see: https://github.com/actions/checkout/issues/13#issuecomment-724415212
+#    #     run: |
+#    #       git config --global user.name "github-actions[bot]"
+#    #       git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+#    #   - name: Download zipped HTML report
+#    #     uses: actions/download-artifact@v2
+#    #     with:
+#    #       name: selenium-report
+#    #       path: ./reports/SparkReport
+#    #   - name: Push HTML Report
+#    #     timeout-minutes: 3
+#    #     # commit report, then try push-rebase-loop until it's able to merge the HTML report to the gh-pages branch
+#    #     # this is necessary when this job is running at least twice at the same time (e.g. through two pushes at the same time)
+#    #     run: |
+#    #       git add .
+#    #       git commit -m "workflow: add HTML report for run-id ${{ github.run_id }} (attempt:  ${{ github.run_attempt }})"
+#
+#    #       while true; do
+#    #         git pull --rebase
+#    #         if [ $? -ne 0 ]; then
+#    #           echo "Failed to rebase. Please review manually."
+#    #           exit 1
+#    #         fi
+#
+#    #         git push
+#    #         if [ $? -eq 0 ]; then
+#    #           echo "Successfully pushed HTML report to repo."
+#    #           exit 0
+#    #         fi
+#    #       done
+#    #   - name: Output Report URL as Worfklow Annotation
+#    #     run: |
+#    #       FULL_HTML_REPORT_URL=https://adegzmn.github.io/adgzmn-selenium/reports/$HTML_REPORT_URL_PATH
+#
+#    #       echo "::notice title=📋 Published Selenium Test Report::$FULL_HTML_REPORT_URL"
