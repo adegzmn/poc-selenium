@@ -2,7 +2,7 @@ name: Release Workflow
 
 on:
   pull_request:
-    branches: [ "main" ]
+    branches: [ "release" ]
     types:
       - closed
 
@@ -57,3 +57,11 @@ jobs:
       uses: actions/deploy-pages@v4.0.5
       with:
         token: ${{ github.token }}
+
+    - name: Merge Release to Master
+      uses: mtanzi/action-automerge@v1
+      id: merge
+      with:
+        github_token: ${{ github.token }}
+        source: 'release'
+        target: 'master'
