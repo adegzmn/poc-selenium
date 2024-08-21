@@ -1,4 +1,4 @@
-name: Release Workflow
+name: Release to Main Workflow
 
 on:
   pull_request:
