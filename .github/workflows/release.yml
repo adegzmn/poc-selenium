@@ -58,17 +58,13 @@ jobs:
       with:
         token: ${{ github.token }}
 
-    - name: Main Branch Checkout
+    - name: Merge branch
+      uses: devmasx/merge-branch@1.4.0
       with:
-        token: '${{ secrets.GITHUB_TOKEN }}'
-      run: |
-        git fetch
-        git checkout main
-
-    - name: Merge Release to Main
-      uses: devvspaces/merge-branches@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        label_name: Merging
+        target_branch: main
         from_branch: release
-        to_branch: main
+        head_to_merge: GITHUB_SHA
+        github_token: ${{ github.token }}
+              
           
