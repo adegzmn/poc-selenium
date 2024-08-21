@@ -58,10 +58,10 @@ jobs:
       with:
         token: ${{ github.token }}
 
-    - name: Merge Release to Master
-      uses: mtanzi/action-automerge@v1
-      id: merge
+    - name: Merge release to main
+      uses: devmasx/merge-branch@master
       with:
+        type: now
+        from_branch: release
+        target_branch: main
         github_token: ${{ github.token }}
-        source: 'release'
-        target: 'main'
