@@ -58,10 +58,10 @@ jobs:
       with:
         token: ${{ github.token }}
 
-    - name: Merge release to main
-      uses: devmasx/merge-branch@master
+    - name: Merge Branches
+      uses: devvspaces/merge-branches@v1
       with:
-        type: now
+        token: ${{ secrets.GITHUB_TOKEN }}
         from_branch: release
-        target_branch: main
-        github_token: ${{ github.token }}
+        to_branch: main
+          
