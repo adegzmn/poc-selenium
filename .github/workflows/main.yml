@@ -9,7 +9,6 @@ on:
 jobs:
 
   build:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
     permissions:
@@ -66,5 +65,3 @@ jobs:
           from_branch: release
           head_to_merge: GITHUB_SHA
           github_token: ${{ github.token }}
-              
-          
